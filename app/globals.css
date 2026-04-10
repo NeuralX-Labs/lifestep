@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   TOKENS DE DISEÑO — LifeStep
+   En Tailwind v4 los colores y sombras se definen aquí con @theme
+   ============================================================ */
+@theme {
+  /* Los 5 pilares del juego */
+  --color-vit:        #10b981; /* Esmeralda — Vitalidad  */
+  --color-vit-light:  #dcfce7;
+  --color-vit-dark:   #065f46;
+
+  --color-wis:        #3b82f6; /* Azul — Sabiduría       */
+  --color-wis-light:  #dbeafe;
+  --color-wis-dark:   #1e3a8a;
+
+  --color-wil:        #8b5cf6; /* Violeta — Voluntad     */
+  --color-wil-light:  #ede9fe;
+  --color-wil-dark:   #4c1d95;
+
+  --color-soc:        #f43f5e; /* Coral — Vínculo        */
+  --color-soc-light:  #fff1f2;
+  --color-soc-dark:   #881337;
+
+  --color-gold:       #f59e0b; /* Ámbar — Fortuna/Moneda */
+  --color-gold-light: #fef3c7;
+  --color-gold-dark:  #78350f;
+
+  /* Sombras estilo iOS */
+  --shadow-ios:    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-ios-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+  --shadow-ios-xl: 0 25px 80px rgba(0, 0, 0, 0.15);
+
+  /* Tipografía del sistema (SF Pro en iOS, Segoe en Windows) */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================================
+   RESET BASE — aspecto iOS
+   ============================================================ */
+* {
+  -webkit-tap-highlight-color: transparent; /* Quita el flash azul al tocar en móvil */
+  -webkit-font-smoothing: antialiased;       /* Texto más suave en macOS/iOS           */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  background-color: #ffffff;
+  overscroll-behavior: none; /* Evita el rebote al hacer scroll en móvil */
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Safe area para iPhone con notch */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
