@@ -21,6 +21,12 @@ interface StatsPanelProps {
 
 const STAT_ORDER: StatKey[] = ['VIT', 'WIS', 'WIL', 'SOC', 'FOR']
 
+const HP_GRADIENT_NORMAL    = 'linear-gradient(90deg, #f43f5e, #fb7185)'
+const HP_GRADIENT_EXHAUSTED = 'linear-gradient(90deg, #f97316, #fb923c)'
+const HP_BG                 = '#fff1f2'
+const EXP_GRADIENT          = 'linear-gradient(90deg, #6366f1, #818cf8)'
+const EXP_BG                = '#e0e7ff'
+
 // Barra de progreso animada con Framer Motion
 function ProgressBar({
   percent,
@@ -54,7 +60,7 @@ export default function StatsPanel({
   isExhausted,
 }: StatsPanelProps) {
   const hpPercent  = (hp / GAME_RULES.MAX_HP) * 100
-  const expPercent = (exp / expToNextLevel) * 100
+  const expPercent = (exp / (expToNextLevel || 1)) * 100
 
   return (
     <div className="w-full flex flex-col gap-3">
@@ -68,12 +74,8 @@ export default function StatsPanel({
         </div>
         <ProgressBar
           percent={hpPercent}
-          gradient={
-            isExhausted
-              ? 'linear-gradient(90deg, #f97316, #fb923c)'
-              : 'linear-gradient(90deg, #f43f5e, #fb7185)'
-          }
-          bg="#fff1f2"
+          gradient={isExhausted ? HP_GRADIENT_EXHAUSTED : HP_GRADIENT_NORMAL}
+          bg={HP_BG}
         />
         {isExhausted && (
           <p className="text-[11px] text-orange-500 mt-1">
@@ -92,8 +94,8 @@ export default function StatsPanel({
         </div>
         <ProgressBar
           percent={expPercent}
-          gradient="linear-gradient(90deg, #6366f1, #818cf8)"
-          bg="#e0e7ff"
+          gradient={EXP_GRADIENT}
+          bg={EXP_BG}
         />
       </div>
 
