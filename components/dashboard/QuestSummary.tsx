@@ -49,7 +49,9 @@ export default function QuestSummary() {
 
       {/* Lista de misiones */}
       <div className="flex flex-col gap-2">
-        {visible.map((quest, i) => (
+        {visible.map((quest, i) => {
+          const statDef = STATS[quest.stat] ?? STATS['VIT']  // fallback defensivo
+          return (
           <motion.div
             key={quest.id}
             className="flex items-center gap-3"
@@ -66,7 +68,7 @@ export default function QuestSummary() {
               }`}
             >
               {quest.completedToday && (
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                <svg aria-hidden="true" width="10" height="8" viewBox="0 0 10 8" fill="none">
                   <path
                     d="M1 4L3.5 6.5L9 1"
                     stroke="white"
@@ -98,14 +100,15 @@ export default function QuestSummary() {
             <span
               className="text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0"
               style={{
-                background: STATS[quest.stat].light,
-                color: STATS[quest.stat].color,
+                background: statDef.light,
+                color: statDef.color,
               }}
             >
               {quest.stat}
             </span>
           </motion.div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Enlace "Ver todas" si hay más de 5 */}
