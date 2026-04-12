@@ -18,14 +18,15 @@ interface PlayerRingProps {
 // Orden de aparición de los stats en el anillo (sentido horario desde las 12h)
 const STAT_ORDER: StatKey[] = ['VIT', 'WIS', 'WIL', 'SOC', 'FOR']
 
-const SECTOR_DEG = 68  // grados del arco visible por stat
-const TOTAL_DEG  = 72  // grados del sector completo (68 + 4 de hueco)
+const SECTOR_DEG   = 68   // grados del arco visible por stat
+const TOTAL_DEG    = 72   // grados del sector completo (68 + 4 de hueco)
+const STROKE_WIDTH = 14   // grosor del trazo SVG
+const INNER_PADDING = 4   // margen interior para que el trazo no toque el borde del contenedor
 
 export default function PlayerRing({ level, stats, size = 200 }: PlayerRingProps) {
   const cx = size / 2
   const cy = size / 2
-  const strokeWidth = 14
-  const r = (size - strokeWidth) / 2 - 4
+  const r = (size - STROKE_WIDTH) / 2 - INNER_PADDING
   const circumference = 2 * Math.PI * r
   const sectorLength  = circumference * (SECTOR_DEG / 360)
 
@@ -52,7 +53,7 @@ export default function PlayerRing({ level, stats, size = 200 }: PlayerRingProps
                 r={r}
                 fill="none"
                 stroke={STATS[key].light}
-                strokeWidth={strokeWidth}
+                strokeWidth={STROKE_WIDTH}
                 strokeDasharray={`${sectorLength} ${circumference - sectorLength}`}
                 strokeDashoffset={dashOffset}
                 strokeLinecap="round"
@@ -64,7 +65,7 @@ export default function PlayerRing({ level, stats, size = 200 }: PlayerRingProps
                 r={r}
                 fill="none"
                 stroke={STATS[key].color}
-                strokeWidth={strokeWidth}
+                strokeWidth={STROKE_WIDTH}
                 strokeLinecap="round"
                 strokeDashoffset={dashOffset}
                 initial={{ strokeDasharray: `0 ${circumference}` }}
