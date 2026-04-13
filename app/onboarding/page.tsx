@@ -52,6 +52,24 @@ export default function OnboardingPage() {
 
   if (player !== null) return null
 
+  // ——— LÓGICA DE SELECCIÓN DE PILARES ———
+  function toggleStat(key: StatKey) {
+    setSelectedStats((prev) => {
+      if (prev.includes(key)) {
+        return prev.filter((k) => k !== key)
+      }
+      if (prev.length < 2) {
+        return [...prev, key]
+      }
+      return [prev[1], key]
+    })
+  }
+
+  function handleFinish() {
+    initPlayer(name.trim(), selectedStats)
+    router.push('/dashboard')
+  }
+
   // ——— PASO 1: BIENVENIDA ———
   if (step === 1) {
     return (
@@ -120,7 +138,71 @@ export default function OnboardingPage() {
   }
 
   // ——— PASO 3: PILARES ———
-  // (se añade en Task 4)
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-linear-to-b from-white to-indigo-50 px-6">
+      <motion.div
+        key="step3"
+        {...SCREEN_ANIM}
+        className="flex flex-col items-center gap-3 w-full max-w-sm"
+      >
+        <ProgressDots step={3} />
+        <h2 className="text-xl font-bold text-slate-900 text-center">
+          Elige tus 2 pilares
+        </h2>
+        <p className="text-sm text-slate-500 text-center">
+          Serán tu especialidad — ganarás más EXP en ellos
+        </p>
 
-  return null
+        <div className="flex flex-col gap-3 w-full mt-2">
+          {STAT_KEYS.map((key) => {
+            const stat = STATS[key]
+            const isSelected = selectedStats.includes(key)
+            return (
+              <button
+                key={key}
+                onClick={() => toggleStat(key)}
+                style={
+                  isSelected
+                    ? { background: stat.light, borderColor: stat.color }
+                    : { background: 'rgba(255,255,255,0.6)', borderColor: '#e2e8f0' }
+                }
+                className="flex items-center gap-3 w-full px-4 py-3 rounded-xl border-2 text-left"
+              >
+                <span className="text-xl">{stat.emoji}</span>
+                <div className="flex-1">
+                  <div className="text-sm font-semibold text-slate-800">
+                    {stat.name}
+                  </div>
+                  <div className="text-xs text-slate-500">{stat.description}</div>
+                </div>
+                {isSelected && (
+                  <div
+                    style={{ background: stat.color }}
+                    className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs"
+                    aria-hidden="true"
+                  >
+                    ✓
+                  </div>
+                )}
+              </button>
+            )
+          })}
+        </div>
+
+        <button
+          onClick={handleFinish}
+          disabled={selectedStats.length !== 2}
+          className="w-full mt-2 bg-indigo-500 text-white font-semibold py-3 rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          ¡Comenzar!
+        </button>
+        <button
+          onClick={() => setStep(2)}
+          className="text-sm text-slate-400 mt-1"
+        >
+          ← Volver
+        </button>
+      </motion.div>
+    </div>
+  )
 }
