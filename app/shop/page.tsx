@@ -10,9 +10,9 @@ import ShopSection from '@/components/shop/ShopSection'
 import ShopItem from '@/components/shop/ShopItem'
 import NewRewardSheet from '@/components/shop/NewRewardSheet'
 import ShopToast from '@/components/shop/ShopToast'
+import { GAME_RULES } from '@/lib/constants'
 
-// Coste fijo de la Poción de vida (igual que GAME_RULES.RECOVERY_GOLD_COST = 50)
-const POTION_COST = 50
+const POTION_COST = GAME_RULES.RECOVERY_GOLD_COST
 
 export default function ShopPage() {
   const player = usePlayerStore((s) => s.player)
@@ -31,7 +31,8 @@ export default function ShopPage() {
   }
 
   const handleRedeemReward = (id: string, cost: number) => {
-    spendGold(cost)
+    const success = spendGold(cost)
+    if (!success) return
     removeItem(id)
     setToast('¡Premio canjeado!')
   }
