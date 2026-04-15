@@ -14,9 +14,10 @@ const CACHED_URLS = [
 // Al instalarse: guarda los archivos principales en caché
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CACHED_URLS))
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(CACHED_URLS))
+      .then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
 // Al activarse: elimina cachés de versiones antiguas
@@ -28,9 +29,8 @@ self.addEventListener('activate', (event) => {
           .filter((key) => key !== CACHE_NAME)
           .map((key) => caches.delete(key))
       )
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 // Al recibir peticiones: intenta la red primero, si falla usa caché
