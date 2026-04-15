@@ -7,6 +7,9 @@ import './globals.css'
 import BottomNav from '@/components/layout/BottomNav'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'
+  ),
   title: 'LifeStep',
   description: 'Gamifica tu vida. Sube de nivel cada día.',
   manifest: '/manifest.json',
@@ -14,6 +17,15 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: 'default',
     title: 'LifeStep',
+  },
+  openGraph: {
+    title: 'LifeStep',
+    description: 'Gamifica tu vida. Sube de nivel cada día.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
 }
 
@@ -36,7 +48,7 @@ export default function RootLayout({
         {/* Meta tags adicionales para instalación en iOS */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
       </head>
       <body className="bg-white font-sans antialiased">
         {/* Contenedor principal: deja espacio abajo para el BottomNav (h-16 = 64px) */}
