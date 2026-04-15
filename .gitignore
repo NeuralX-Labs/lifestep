@@ -45,3 +45,7 @@ next-env.d.ts
 
 # git worktrees
 .worktrees/
+.gstack/
+
+# claude code local settings (machine-specific)
+.claude/
