@@ -16,6 +16,7 @@ export default function NewRewardSheet({ onClose, onSave }: NewRewardSheetProps)
 
   const handleSave = () => {
     if (!name.trim()) return
+    if (name.trim().length > 100) return
     onSave(name.trim(), cost)
   }
 
@@ -40,8 +41,9 @@ export default function NewRewardSheet({ onClose, onSave }: NewRewardSheetProps)
           Nombre
         </p>
         <input
-          className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-900 mb-4 outline-none focus:border-indigo-400"
+          className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-900 mb-4 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-offset-1"
           placeholder="ej. Helado de postre"
+          maxLength={100}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />

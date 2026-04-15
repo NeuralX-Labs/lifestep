@@ -1,7 +1,7 @@
 // app/shop/page.tsx
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { usePlayerStore } from '@/store/usePlayerStore'
 import { useShopStore } from '@/store/useShopStore'
@@ -22,6 +22,7 @@ export default function ShopPage() {
 
   const [sheetOpen, setSheetOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
+  const dismissToast = useCallback(() => setToast(null), [])
 
   if (!player) return null
 
@@ -119,7 +120,7 @@ export default function ShopPage() {
       {/* Toast */}
       <AnimatePresence>
         {toast && (
-          <ShopToast message={toast} onDismiss={() => setToast(null)} />
+          <ShopToast message={toast} onDismiss={dismissToast} />
         )}
       </AnimatePresence>
     </div>

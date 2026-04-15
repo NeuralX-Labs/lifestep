@@ -25,7 +25,6 @@ export const useShopStore = create<ShopStore>()(
           id: crypto.randomUUID(),
           name: input.name,
           cost: input.cost,
-          redeemedCount: 0,
         }
         set((state) => ({ items: [...state.items, newItem] }))
       },

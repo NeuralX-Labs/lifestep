@@ -56,7 +56,6 @@ function addTestReward(overrides: { id?: string; name?: string; cost?: number } 
       id: overrides.id ?? 'r1',
       name: overrides.name ?? 'Helado',
       cost: overrides.cost ?? 20,
-      redeemedCount: 0,
     }],
   })
 }
@@ -183,6 +182,33 @@ describe('ShopPage', () => {
       act(() => { vi.advanceTimersByTime(3000) })
       expect(screen.queryByRole('alert')).not.toBeInTheDocument()
       vi.useRealTimers()
+    })
+  })
+
+  describe('Caminos negativos', () => {
+    it('si recoverWithGold devuelve false, no aparece el toast', () => {
+      mockRecoverWithGold.mockReturnValue(false)
+      setPlayer({ isExhausted: true, gold: 100 })
+      render(<ShopPage />)
+      fireEvent.click(screen.getByTestId('potion-button'))
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    })
+
+    it('si el gold es insuficiente al canjear, el premio no desaparece', () => {
+      setPlayer({ gold: 5 })
+      addTestReward({ id: 'r1', name: 'Helado', cost: 20 })
+      render(<ShopPage />)
+      // El botón no se muestra porque canAfford=false — el ítem sigue en pantalla
+      expect(screen.queryByTestId('redeem-r1')).not.toBeInTheDocument()
+      expect(screen.getByText('Helado')).toBeInTheDocument()
+    })
+
+    it('no se guarda un premio con nombre vacío', () => {
+      render(<ShopPage />)
+      fireEvent.click(screen.getByTestId('add-reward-fab'))
+      fireEvent.click(screen.getByTestId('save-reward-button'))
+      // El sheet sigue abierto, no se añadió ningún ítem
+      expect(screen.getByTestId('reward-sheet-backdrop')).toBeInTheDocument()
     })
   })
 })

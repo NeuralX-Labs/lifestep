@@ -49,5 +49,4 @@ export interface ShopItemData {
   id: string
   name: string
   cost: number
-  redeemedCount: number
 }

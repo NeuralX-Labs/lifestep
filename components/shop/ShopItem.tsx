@@ -30,10 +30,8 @@ export default function ShopItem({
 }: ShopItemProps) {
   const isDisabled = !isAvailable || !canAfford
 
-  const buttonClass =
-    buttonVariant === 'red'
-      ? 'bg-rose-500 text-white rounded-xl px-3 py-1.5 text-sm font-semibold'
-      : 'bg-indigo-500 text-white rounded-xl px-3 py-1.5 text-sm font-semibold'
+  const buttonBase = 'text-white rounded-xl px-3 py-1.5 text-sm font-semibold'
+  const buttonClass = `${buttonVariant === 'red' ? 'bg-rose-500' : 'bg-indigo-500'} ${buttonBase}`
 
   return (
     <div className={`bg-white rounded-2xl p-4 flex items-center gap-3 ${isDisabled ? 'opacity-50' : ''}`}>
@@ -42,7 +40,7 @@ export default function ShopItem({
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-semibold text-slate-900">{name}</p>
-        <p className="text-xs text-slate-400 mt-0.5">{description}</p>
+        <p className="text-sm text-slate-400 mt-0.5">{description}</p>
       </div>
       <div className="shrink-0">
         {!isAvailable && (
