@@ -92,6 +92,9 @@ export function expForNextLevel(currentLevel: number): number {
   return currentLevel * 100
 }
 
+// Orden canónico de los stats para UI
+export const STAT_ORDER: StatKey[] = ['VIT', 'WIS', 'WIL', 'SOC', 'FOR']
+
 // Claves de localStorage
 export const STORAGE_KEYS = {
   PLAYER: 'lifestep_player',

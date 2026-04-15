@@ -26,7 +26,7 @@ export default function MetricsRow({ streak, gold, createdAt }: MetricsRowProps)
   return (
     <div className="flex gap-3">
       <MetricCard icon="⚡" value={streak} label="días racha" />
-      <MetricCard icon="🏅" value={gold} label="gold total" />
+      <MetricCard icon="🏅" value={gold} label="gold" />
       <MetricCard icon="📅" value={`${daysPlaying}d`} label="jugando" />
     </div>
   )

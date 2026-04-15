@@ -27,6 +27,7 @@ export default function ProfileHeader({ name, level, streak }: ProfileHeaderProp
         </p>
       </div>
       <button
+        type="button"
         data-testid="settings-button"
         onClick={() => router.push('/settings')}
         className="text-slate-400 text-xl p-1"

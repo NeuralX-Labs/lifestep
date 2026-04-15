@@ -1,8 +1,5 @@
-import { STATS } from '@/lib/constants'
-import type { StatKey } from '@/lib/constants'
+import { STATS, STAT_ORDER } from '@/lib/constants'
 import type { StatLevel } from '@/store/types'
-
-const STAT_ORDER: StatKey[] = ['VIT', 'WIS', 'WIL', 'SOC', 'FOR']
 
 interface StatsProgressProps {
   stats: Record<StatKey, StatLevel>
@@ -17,7 +14,9 @@ export default function StatsProgress({ stats }: StatsProgressProps) {
       {STAT_ORDER.map((key) => {
         const stat = stats[key]
         const info = STATS[key]
-        const percent = Math.min(100, (stat.exp / (stat.level * 100)) * 100)
+        const percent = stat.level > 0
+          ? Math.min(100, (stat.exp / (stat.level * 100)) * 100)
+          : 0
         return (
           <div key={key} className="flex items-center gap-3">
             <span className="text-base w-5 text-center">{info.emoji}</span>

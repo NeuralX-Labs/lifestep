@@ -14,10 +14,6 @@ vi.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }))
 
-vi.mock('@/hooks/useGameLogic', () => ({
-  useGameLogic: () => ({ recoverWithGold: vi.fn() }),
-}))
-
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn() }),
 }))

@@ -1,11 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { STATS } from '@/lib/constants'
-import type { StatKey } from '@/lib/constants'
+import { STATS, STAT_ORDER } from '@/lib/constants'
 import type { PlayerData } from '@/store/types'
-
-const STAT_ORDER: StatKey[] = ['VIT', 'WIS', 'WIL', 'SOC', 'FOR']
 
 interface SocialCardModalProps {
   player: PlayerData
@@ -22,10 +19,16 @@ function buildShareText(player: PlayerData): string {
 export default function SocialCardModal({ player, onClose }: SocialCardModalProps) {
   const handleShare = async () => {
     const text = buildShareText(player)
-    if (navigator.share) {
-      await navigator.share({ text })
-    } else {
-      await navigator.clipboard.writeText(text)
+    try {
+      if (navigator.share) {
+        await navigator.share({ text })
+      } else {
+        await navigator.clipboard.writeText(text)
+      }
+    } catch (err) {
+      if (err instanceof Error && err.name !== 'AbortError') {
+        console.error('Error al compartir:', err)
+      }
     }
   }
 
