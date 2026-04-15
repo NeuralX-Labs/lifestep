@@ -1,4 +1,5 @@
 import { STATS, STAT_ORDER } from '@/lib/constants'
+import type { StatKey } from '@/lib/constants'
 import type { StatLevel } from '@/store/types'
 
 interface StatsProgressProps {
